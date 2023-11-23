@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import styles from "./ClientsList.module.css";
 
 const endpoint = "http://localhost:3001/clients";
 export default function ClientsList() {
@@ -16,7 +17,7 @@ export default function ClientsList() {
       });
   }, []);
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Klientai</h1>
       <table>
         <thead>
@@ -24,6 +25,7 @@ export default function ClientsList() {
             <th>Vardas</th>
             <th>Pavarde</th>
             <th>El. pastas</th>
+            <th>Telefonas</th>
             <th>Data</th>
             <th>Laikas</th>
             <th>Veiksmai</th>
@@ -35,6 +37,7 @@ export default function ClientsList() {
               <td>{client.name}</td>
               <td>{client.surname}</td>
               <td>{client.email}</td>
+              <td>{client.phone}</td>
 
               <td>{new Date(client.registerDate).toLocaleDateString()}</td>
               <td>
@@ -43,7 +46,7 @@ export default function ClientsList() {
                   { hour: "2-digit", minute: "2-digit" }
                 )}
               </td>
-              <td>
+              <td className={styles.buttons}>
                 <button>Keisti</button>
                 <button>Trinti</button>
               </td>

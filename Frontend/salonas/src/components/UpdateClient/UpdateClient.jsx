@@ -1,8 +1,8 @@
-import React, { useState } from "react";
 import axios from "axios";
-import styles from "./RegisterForm.module.css";
-
-export default function RegisterForm() {
+import React from "react";
+import { useState } from "react";
+import styles from "./UpdateClient.module.css";
+export default function UpdateClient() {
   const endpoint = "http://localhost:3001/clients";
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -32,7 +32,7 @@ export default function RegisterForm() {
   };
   return (
     <div className={styles.container}>
-      <form onSubmit={handleSubmit} className={styles.regform}>
+      <form onSubmit={handleSubmit} className={styles.updform}>
         <label htmlFor="name">Vardas:</label>
         <input
           type="text"
