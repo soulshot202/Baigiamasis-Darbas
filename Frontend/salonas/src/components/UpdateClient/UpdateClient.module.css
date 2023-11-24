@@ -19,20 +19,7 @@
   border-radius: 5px;
   width: 100%;
 }
-.updform button {
-  padding: 7px;
-  border: none;
-  border-radius: 7px;
-  background-color: #cf1a1a;
-  color: #fff;
-  cursor: pointer;
-  width: 50%;
-  margin: 0 auto;
-}
 
-.updform button:hover {
-  background-color: green;
-}
 .updform select {
   padding: 7px;
   border: 1px solid #ccc;
@@ -60,4 +47,22 @@
 .updform label {
   text-align: center;
   font-weight: bold;
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+.updform button {
+  padding: 7px;
+  border: none;
+  border-radius: 7px;
+  background-color: #cf1a1a;
+  color: #fff;
+  cursor: pointer;
+  width: 50%;
+  margin: 0 auto;
+}
+
+.updform button:hover {
+  background-color: green;
 }

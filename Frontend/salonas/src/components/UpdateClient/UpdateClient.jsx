@@ -1,8 +1,9 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import styles from "./UpdateClient.module.css";
-export default function UpdateClient() {
+import { createPortal } from "react-dom";
+export default function UpdateClient({ isOpen, onClose, id }) {
   const endpoint = "http://localhost:3001/clients";
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -11,6 +12,21 @@ export default function UpdateClient() {
   const [registerDate, setRegisterDate] = useState("");
   const [registerTime, setRegisterTime] = useState("");
 
+  useEffect(() => {
+    axios
+      .get(`${endpoint}/${id}`)
+      .then((response) => {
+        setName(response.data.name);
+        setSurname(response.data.surname);
+        setEmail(response.data.email);
+        setPhone(response.data.phone);
+        setRegisterDate(response.data.registerDate.slice(0, 10));
+        setRegisterTime(response.data.registerDate.slice(11, 19));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [id]);
   const handleSubmit = (event) => {
     event.preventDefault();
     const newClient = {
@@ -20,17 +36,13 @@ export default function UpdateClient() {
       phone,
       registerDate: registerDate.slice(0, 10) + " " + registerTime,
     };
-    axios
-      .post(endpoint, newClient)
-      .then((response) => {
-        console.log(response.data);
-        alert("Registracija sėkminga");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    axios.put(`${endpoint}/${id}`, newClient);
   };
-  return (
+
+  if (!isOpen) {
+    return null;
+  }
+  return createPortal(
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.updform}>
         <label htmlFor="name">Vardas:</label>
@@ -92,9 +104,15 @@ export default function UpdateClient() {
             <option value="16:00">16:00</option>
           </select>
         </div>
-
-        <button type="submit">Registruoti</button>
+        <div className={styles.buttons}>
+          {" "}
+          <button type="submit">Atnaujinti</button>
+          <button type="button" onClick={onClose}>
+            Atšaukti
+          </button>
+        </div>
       </form>
-    </div>
+    </div>,
+    document.body
   );
 }
