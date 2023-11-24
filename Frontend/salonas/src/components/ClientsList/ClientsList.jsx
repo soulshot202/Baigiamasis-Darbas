@@ -19,30 +19,63 @@ export default function ClientsList() {
         console.log(error);
       });
   }, []);
-  // async function deleteClient() {
-  //   try {
-  //     await axios.delete(`${endpoint}/${client._id}`);
-  //     // setClients((prev) => prev.filter((p) => p._id !== clients._id));
 
-  //     alert("Klientas sėkmingai ištrintas");
-  //   } catch (error) {
-  //     console.log(error);
-  //     console.log(id);
-  //     alert("Nepavyko ištrinti kliento");
-  //   }
-  // }
   return (
     <div className={styles.container}>
-      <UpdateClient isOpen={isOpen} id={id} onClose={() => setIsOpen(false)} />
+      <UpdateClient
+        isOpen={isOpen}
+        setClients={setClients}
+        id={id}
+        onClose={() => setIsOpen(false)}
+      />
       <h1>Klientai</h1>
       <table>
         <thead>
           <tr>
             <th>Vardas</th>
-            <th>Pavarde</th>
-            <th>El. pastas</th>
+            <th
+              title="rikiuoti pagal pavardę"
+              className={styles.surname}
+              onClick={() => {
+                const sortedClients = [...clients].sort((a, b) =>
+                  a.surname.localeCompare(b.surname)
+                );
+                if (sortedClients === clients) {
+                  const sortedClients2 = [...clients].sort((a, b) =>
+                    b.surname.localeCompare(a.surname)
+                  );
+                  console.log(sortedClients2);
+                  return setClients(sortedClients2);
+                } else {
+                  setClients(sortedClients);
+                }
+              }}>
+              Pavardė
+            </th>
+            <th>El. paštas</th>
             <th>Telefonas</th>
-            <th>Data</th>
+            <th
+              title="rikiuoti pagal datą"
+              className={styles.date}
+              onClick={() => {
+                const sortedClients = [...clients].sort(
+                  (a, b) => new Date(a.registerDate) - new Date(b.registerDate)
+                );
+                if (sortedClients === clients) {
+                  const sortedClients2 = [...clients].sort(
+                    (a, b) =>
+                      new Date(b.registerDate) - new Date(a.registerDate)
+                  );
+                  console.log(sortedClients2);
+                  return setClients(sortedClients2);
+                } else {
+                  setClients(sortedClients);
+
+                  console.log(sortedClients);
+                }
+              }}>
+              Data
+            </th>
             <th>Laikas</th>
             <th>Veiksmai</th>
           </tr>

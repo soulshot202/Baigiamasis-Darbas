@@ -8,6 +8,20 @@
   gap: 20px;
 }
 
+.container h1 {
+  text-align: center;
+  color: #ccc;
+}
+
+.date {
+  cursor: pointer;
+  color: #00000070;
+}
+.surname {
+  cursor: pointer;
+  color: #00000070;
+}
+
 .container table {
   width: 100%;
   border-collapse: collapse;

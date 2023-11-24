@@ -7,11 +7,11 @@ export default function RegisterForm() {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("+370");
   const [registerDate, setRegisterDate] = useState("");
-  const [registerTime, setRegisterTime] = useState("");
+  const [registerTime, setRegisterTime] = useState("09:00");
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
     const newClient = {
       name,
@@ -20,16 +20,21 @@ export default function RegisterForm() {
       phone,
       registerDate: registerDate.slice(0, 10) + " " + registerTime,
     };
-    axios
-      .post(endpoint, newClient)
-      .then((response) => {
+    try {
+      await axios.post(endpoint, newClient).then((response) => {
         console.log(response.data);
         alert("Registracija sėkminga");
-      })
-      .catch((error) => {
-        console.log(error);
+        setName("");
+        setSurname("");
+        setEmail("");
+        setPhone("");
+        setRegisterDate("");
+        setRegisterTime("");
       });
-  };
+    } catch (error) {
+      alert(error.response.data.error);
+    }
+  }
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.regform}>

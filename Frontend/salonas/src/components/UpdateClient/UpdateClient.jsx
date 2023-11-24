@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import styles from "./UpdateClient.module.css";
 import { createPortal } from "react-dom";
-export default function UpdateClient({ isOpen, onClose, id }) {
+export default function UpdateClient({ isOpen, onClose, id, setClients }) {
   const endpoint = "http://localhost:3001/clients";
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
@@ -21,29 +21,52 @@ export default function UpdateClient({ isOpen, onClose, id }) {
         setEmail(response.data.email);
         setPhone(response.data.phone);
         setRegisterDate(response.data.registerDate.slice(0, 10));
-        setRegisterTime(response.data.registerDate.slice(11, 19));
+        setRegisterTime(
+          new Date(response.data.registerDate).toLocaleTimeString(
+            navigator.language,
+            {
+              hour: "2-digit",
+              minute: "2-digit",
+            }
+          )
+        );
       })
       .catch((error) => {
         console.log(error);
       });
   }, [id]);
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
-    const newClient = {
+    const editClient = {
       name,
       surname,
       email,
       phone,
       registerDate: registerDate.slice(0, 10) + " " + registerTime,
     };
-    axios.put(`${endpoint}/${id}`, newClient);
-  };
+    try {
+      await axios.put(`${endpoint}/${id}`, editClient);
+      setClients((prevClients) => {
+        return prevClients.map((client) => {
+          if (client._id === id) {
+            return editClient;
+          }
+          return client;
+        });
+      });
+
+      alert("Klientas atnaujintas");
+      onClose();
+    } catch (error) {
+      alert(error.response.data.error);
+    }
+  }
 
   if (!isOpen) {
     return null;
   }
   return createPortal(
-    <div className={styles.container}>
+    <div className={styles.container2}>
       <form onSubmit={handleSubmit} className={styles.updform}>
         <label htmlFor="name">Vardas:</label>
         <input
@@ -105,7 +128,6 @@ export default function UpdateClient({ isOpen, onClose, id }) {
           </select>
         </div>
         <div className={styles.buttons}>
-          {" "}
           <button type="submit">Atnaujinti</button>
           <button type="button" onClick={onClose}>
             Atšaukti
