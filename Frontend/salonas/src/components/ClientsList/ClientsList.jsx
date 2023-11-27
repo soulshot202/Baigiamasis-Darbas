@@ -8,6 +8,7 @@ export default function ClientsList() {
   const [clients, setClients] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [id, setId] = useState("655e5ec1e47b56485e85a862");
+  const [order, setOrder] = useState("asc");
 
   useEffect(() => {
     axios
@@ -37,20 +38,23 @@ export default function ClientsList() {
               title="rikiuoti pagal pavardę"
               className={styles.surname}
               onClick={() => {
-                const sortedClients = [...clients].sort((a, b) =>
-                  a.surname.localeCompare(b.surname)
-                );
-                if (sortedClients === clients) {
-                  const sortedClients2 = [...clients].sort((a, b) =>
+                if (order === "asc") {
+                  const sortedClients = [...clients].sort((a, b) =>
+                    a.surname.localeCompare(b.surname)
+                  );
+                  setClients(sortedClients);
+                  setOrder("desc");
+                  return;
+                } else {
+                  const sortedClients = [...clients].sort((a, b) =>
                     b.surname.localeCompare(a.surname)
                   );
-                  console.log(sortedClients2);
-                  return setClients(sortedClients2);
-                } else {
                   setClients(sortedClients);
+                  setOrder("asc");
+                  return;
                 }
               }}>
-              Pavardė
+              Pavardė <i class="fa-solid fa-sort"></i>
             </th>
             <th>El. paštas</th>
             <th>Telefonas</th>
@@ -58,23 +62,25 @@ export default function ClientsList() {
               title="rikiuoti pagal datą"
               className={styles.date}
               onClick={() => {
-                const sortedClients = [...clients].sort(
-                  (a, b) => new Date(a.registerDate) - new Date(b.registerDate)
-                );
-                if (sortedClients === clients) {
-                  const sortedClients2 = [...clients].sort(
+                if (order === "asc") {
+                  const sortedClients = [...clients].sort(
+                    (a, b) =>
+                      new Date(a.registerDate) - new Date(b.registerDate)
+                  );
+                  setClients(sortedClients);
+                  setOrder("desc");
+                  return;
+                } else {
+                  const sortedClients = [...clients].sort(
                     (a, b) =>
                       new Date(b.registerDate) - new Date(a.registerDate)
                   );
-                  console.log(sortedClients2);
-                  return setClients(sortedClients2);
-                } else {
                   setClients(sortedClients);
-
-                  console.log(sortedClients);
+                  setOrder("asc");
+                  return;
                 }
               }}>
-              Data
+              Data <i class="fa-solid fa-sort"></i>
             </th>
             <th>Laikas</th>
             <th>Veiksmai</th>
@@ -112,6 +118,9 @@ export default function ClientsList() {
 
                 <button
                   onClick={async () => {
+                    if (!window.confirm("Ar tikrai norite ištrinti klienta?")) {
+                      return;
+                    }
                     await axios
                       .delete(`${endpoint}/${client._id}`)
                       .then(() => {

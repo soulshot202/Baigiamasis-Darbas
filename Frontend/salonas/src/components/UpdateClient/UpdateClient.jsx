@@ -59,6 +59,15 @@ export default function UpdateClient({ isOpen, onClose, id, setClients }) {
       );
       return;
     }
+    if (name[0] < `A` || name[0] > `Z`) {
+      alert("Vardas turi prasideti didžiaja raide");
+      return;
+    }
+
+    if (surname[0] < `A` || surname[0] > `Z`) {
+      alert("Pavardės turi prasideti didžiaja raide");
+      return;
+    }
 
     if (!validEmail.test(email)) {
       return alert("Neteisingas el. paštas");

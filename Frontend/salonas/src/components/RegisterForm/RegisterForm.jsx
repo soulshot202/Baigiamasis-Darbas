@@ -14,6 +14,7 @@ export default function RegisterForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
     if (
       !name ||
       !surname ||
@@ -33,6 +34,15 @@ export default function RegisterForm() {
       alert(
         "Pavardės turi būti ne daugiau nei 25 simbolių ir ne ilgesnės nei 3"
       );
+      return;
+    }
+    if (name[0] < `A` || name[0] > `Z`) {
+      alert("Vardas turi prasideti didžiaja raide");
+      return;
+    }
+
+    if (surname[0] < `A` || surname[0] > `Z`) {
+      alert("Pavardės turi prasideti didžiaja raide");
       return;
     }
 
