@@ -68,3 +68,8 @@
 .buttons button:hover {
   background-color: #eaeaea;
 }
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

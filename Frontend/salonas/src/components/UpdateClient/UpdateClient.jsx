@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import styles from "./UpdateClient.module.css";
 import { createPortal } from "react-dom";
+import { validEmail } from "../../regex/regex";
 export default function UpdateClient({ isOpen, onClose, id, setClients }) {
   const endpoint = "http://localhost:3001/clients";
   const [name, setName] = useState("");
@@ -37,6 +38,45 @@ export default function UpdateClient({ isOpen, onClose, id, setClients }) {
   }, [id]);
   async function handleSubmit(event) {
     event.preventDefault();
+    if (
+      !name ||
+      !surname ||
+      !email ||
+      !phone ||
+      !registerDate ||
+      !registerTime
+    ) {
+      alert("Užpildykite visus laukus");
+      return;
+    }
+    if (name.length > 25 || name.length < 3) {
+      alert("Vardas turi būti ne daugiau nei 25 simbolių ir ne ilgesnis nei 3");
+      return;
+    }
+    if (surname.length > 25 || surname.length < 3) {
+      alert(
+        "Pavardės turi būti ne daugiau nei 25 simbolių ir ne ilgesnės nei 3"
+      );
+      return;
+    }
+
+    if (!validEmail.test(email)) {
+      return alert("Neteisingas el. paštas");
+    }
+
+    if (!phone.startsWith("+370")) {
+      alert("Telefono numeris turi prasideti +370");
+      return;
+    }
+    if (phone.length !== 12) {
+      alert("Neteisingas telefonas");
+      return;
+    }
+    if (registerDate < new Date().toISOString().slice(0, 10)) {
+      alert("Registracijos data negali buti ankstesne uz dabartine");
+      return;
+    }
+
     const editClient = {
       name,
       surname,
@@ -102,6 +142,7 @@ export default function UpdateClient({ isOpen, onClose, id, setClients }) {
             type="date"
             id="registerDate"
             value={registerDate}
+            min={new Date().toISOString().slice(0, 10)}
             onChange={(e) => setRegisterDate(e.target.value)}
           />
           <select

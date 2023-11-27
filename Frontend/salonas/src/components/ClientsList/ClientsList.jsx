@@ -86,7 +86,13 @@ export default function ClientsList() {
               <td>{client.name}</td>
               <td>{client.surname}</td>
               <td>{client.email}</td>
-              <td>{client.phone}</td>
+              <td>
+                {client.phone.slice(0, 4) +
+                  " " +
+                  client.phone.slice(4, 7) +
+                  " " +
+                  client.phone.slice(7)}
+              </td>
 
               <td>{new Date(client.registerDate).toLocaleDateString()}</td>
               <td>
