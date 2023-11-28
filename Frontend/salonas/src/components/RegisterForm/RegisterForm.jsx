@@ -36,13 +36,13 @@ export default function RegisterForm() {
       );
       return;
     }
-    if (name[0] < `A` || name[0] > `Z`) {
+    if (name[0] < `A` || name[0] > `Ž`) {
       alert("Vardas turi prasideti didžiaja raide");
       return;
     }
 
-    if (surname[0] < `A` || surname[0] > `Z`) {
-      alert("Pavardės turi prasideti didžiaja raide");
+    if (surname[0] < `A` || surname[0] > `Ž`) {
+      alert("Pavardės turi prasidėti didžiaja raide");
       return;
     }
 
@@ -51,7 +51,7 @@ export default function RegisterForm() {
     }
 
     if (!phone.startsWith("+370")) {
-      alert("Telefono numeris turi prasideti +370");
+      alert("Telefono numeris turi prasidėti +370");
       return;
     }
     if (phone.length !== 12) {
@@ -59,7 +59,7 @@ export default function RegisterForm() {
       return;
     }
     if (registerDate < new Date().toISOString().slice(0, 10)) {
-      alert("Registracijos data negali buti ankstesne uz dabartine");
+      alert("Registracijos data negali buti ankstesnė uz dabartinę");
       return;
     }
 
@@ -77,9 +77,9 @@ export default function RegisterForm() {
         setName("");
         setSurname("");
         setEmail("");
-        setPhone("");
+        setPhone("+370");
         setRegisterDate("");
-        setRegisterTime("");
+        setRegisterTime("09:00");
       });
     } catch (error) {
       alert(error.response.data.error);

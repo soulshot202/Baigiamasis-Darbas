@@ -59,13 +59,13 @@ export default function UpdateClient({ isOpen, onClose, id, setClients }) {
       );
       return;
     }
-    if (name[0] < `A` || name[0] > `Z`) {
-      alert("Vardas turi prasideti didžiaja raide");
+    if (name[0] < `A` || name[0] > `Ž`) {
+      alert("Vardas turi prasidėti didžiaja raide");
       return;
     }
 
-    if (surname[0] < `A` || surname[0] > `Z`) {
-      alert("Pavardės turi prasideti didžiaja raide");
+    if (surname[0] < `A` || surname[0] > `Ž`) {
+      alert("Pavardės turi prasidėti didžiaja raide");
       return;
     }
 
@@ -74,7 +74,7 @@ export default function UpdateClient({ isOpen, onClose, id, setClients }) {
     }
 
     if (!phone.startsWith("+370")) {
-      alert("Telefono numeris turi prasideti +370");
+      alert("Telefono numeris turi prasidėti +370");
       return;
     }
     if (phone.length !== 12) {
@@ -82,7 +82,7 @@ export default function UpdateClient({ isOpen, onClose, id, setClients }) {
       return;
     }
     if (registerDate < new Date().toISOString().slice(0, 10)) {
-      alert("Registracijos data negali buti ankstesne uz dabartine");
+      alert("Registracijos data negali buti ankstesnė už dabartinę");
       return;
     }
 
