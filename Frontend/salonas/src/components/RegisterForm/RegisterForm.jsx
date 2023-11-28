@@ -27,13 +27,11 @@ export default function RegisterForm() {
       return;
     }
     if (name.length > 25 || name.length < 3) {
-      alert("Vardas turi būti ne daugiau nei 25 simbolių ir ne ilgesnis nei 3");
+      alert("Vardas turi būti ne daugiau nei 25 simbolių ir ne mažiau nei 3");
       return;
     }
     if (surname.length > 25 || surname.length < 3) {
-      alert(
-        "Pavardės turi būti ne daugiau nei 25 simbolių ir ne ilgesnės nei 3"
-      );
+      alert("Pavardė turi būti ne daugiau nei 25 simbolių ir ne mažiau nei 3");
       return;
     }
     if (name[0] < `A` || name[0] > `Ž`) {
