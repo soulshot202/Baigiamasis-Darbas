@@ -57,12 +57,12 @@ export default function UpdateClient({ isOpen, onClose, id, setClients }) {
       alert("Pavardė turi būti ne daugiau nei 25 simbolių ir ne mažiau nei 3");
       return;
     }
-    if (name[0] < `A` || name[0] > `Ž`) {
-      alert("Vardas turi prasidėti didžiaja raide");
+    if (name[0].toUpperCase() !== name[0]) {
+      alert("Vardas turi prasideti didžiaja raide");
       return;
     }
 
-    if (surname[0] < `A` || surname[0] > `Ž`) {
+    if (surname[0].toUpperCase() !== surname[0]) {
       alert("Pavardės turi prasidėti didžiaja raide");
       return;
     }

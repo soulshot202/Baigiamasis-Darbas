@@ -20,6 +20,19 @@ export async function createClient(req, res) {
       .status(400)
       .json({ error: "Vardas privalo buti nuo 3 iki 25 simboliu" });
   }
+  if (name[0].toUpperCase() !== name[0]) {
+    res.status(400).json({
+      error: "Vardas privalo prasideti didžiaja raide",
+    });
+    return;
+  }
+
+  if (surname[0].toUpperCase() !== surname[0]) {
+    res.status(400).json({
+      error: "Pavarde privalo prasideti didžiaja raide",
+    });
+    return;
+  }
   if (surname.length < 3 || surname.length > 25) {
     return res
       .status(400)
